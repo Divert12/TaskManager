@@ -1,0 +1,178 @@
+{% extends 'base.html' %} {% block title %}Dashboard - TaskHub{% endblock %} {% block content %}
+<div class="fade-in">
+    <!-- Header -->
+    <div class="page-header">
+        <h1>Dashboard</h1>
+        <p class="subtitle">Bienvenue, {{ user.username }}</p>
+    </div>
+
+    <!-- stats Cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-card-icon primary">
+                <i class="fas fa-tasks"></i>
+            </div>
+            <div class="stat-card-title">Total des Tâches</div>
+            <div class="stat-card-value">{{ total_taches|default:0 }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-card-icon success">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="stat-card-title">Terminées</div>
+            <div class="stat-card-value">{{ taches_terminees|default:0 }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-card-icon warning">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="stat-card-title">En Cours</div>
+            <div class="stat-card-value">{{ taches_en_cours|default:0 }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-card-icon info">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-card-title">Équipes</div>
+            <div class="stat-card-value">{{ nombre_equipes|default:0 }}</div>
+        </div>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="row">
+        <!-- Recent Tasks -->
+        <div class="col-lg-8">
+            <div class="modern-card">
+                <div class="modern-card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="modern-card-title mb-0">
+                            <i class="fas fa-lock me-2 text-primary"></i> Mes Tâches Privées
+                        </h5>
+                        <a href="{% url 'tasks:liste_taches' %}?prive=true" class="btn btn-sm btn-outline-primary">
+                            Voir tout
+                        </a>
+                    </div>
+                </div>
+                <div class="modern-card-body">
+                    {% if taches_privees %} {% for tache in taches_privees %}
+                    <div class="task-card {{ tache.statut|lower }}">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <h6 class="task-title">
+                                    <a href="{% url 'tasks:detail_tache' tache.id %}" class="text-decoration-none">
+                                            {{ tache.titre }}
+                                        </a>
+                                </h6>
+                                <p class="text-muted mb-2">{{ tache.description|truncatewords:15 }}</p>
+                                <div class="task-meta">
+                                    <span class="status-badge {{ tache.statut|lower }}">
+                                            {{ tache.get_statut_display }}
+                                        </span>
+                                    <small>
+                                            <i class="fas fa-calendar-alt me-1"></i>
+                                            Créée {{ tache.date_creation|timesince }}
+                                        </small>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" title="Options de la tâche">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'tasks:modifier_tache' tache.id %}">
+                                            <i class="fas fa-edit me-2"></i>Modifier
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="{% url 'tasks:supprimer_tache' tache.id %}">
+                                            <i class="fas fa-trash me-2"></i>Supprimer
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %} {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Aucune tâche privée récente</h5>
+                        <p class="text-muted">Commencez par créer votre première tâche privée !</p>
+                        <a href="{% url 'tasks:ajouter_tache' %}" class="btn btn-primary-modern">
+                            <i class="fas fa-plus me-2"></i>Créer une tâche
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Mes eq -->
+        <div class="col-lg-4">
+            <div class="modern-card">
+                <div class="modern-card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="modern-card-title mb-0">
+                            <i class="fas fa-users me-2 text-info"></i> Mes Équipes
+                        </h5>
+                        <a href="{% url 'tasks:liste_equipes' %}" class="btn btn-sm btn-outline-info">
+                            Voir tout
+                        </a>
+                    </div>
+                </div>
+                <div class="modern-card-body">
+                    {% if mes_equipes %} {% for equipe in mes_equipes %}
+                    <div class="team-card mb-3">
+                        <div class="d-flex align-items-center">
+                            <div class="team-avatar me-3">
+                                {{ equipe.nom|first|upper }}
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="team-name">{{ equipe.nom }}</div>
+                                <div class="team-members">
+                                    {{ equipe.membres.count }} membre{{ equipe.membres.count|pluralize }}
+                                </div>
+                            </div>
+                            <a href="{% url 'tasks:equipe_detail' equipe.id %}" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %} {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-users fa-2x text-muted mb-3"></i>
+                        <h6 class="text-muted">Aucune équipe</h6>
+                        <p class="text-muted small">Rejoignez ou créez une équipe pour collaborer !</p>
+                        <a href="{% url 'tasks:creer_equipe' %}" class="btn btn-sm btn-success-modern">
+                            <i class="fas fa-plus me-1"></i>Créer une équipe
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- quiiq actions -->
+            <div class="modern-card mt-4">
+                <div class="modern-card-header">
+                    <h5 class="modern-card-title mb-0">
+                        <i class="fas fa-bolt me-2 text-warning"></i> Actions Rapides
+                    </h5>
+                </div>
+                <div class="modern-card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'tasks:ajouter_tache' %}" class="btn btn-primary-modern">
+                            <i class="fas fa-plus me-2"></i>Créer une tâche
+                        </a>
+                        <a href="{% url 'tasks:creer_equipe' %}" class="btn btn-success-modern">
+                            <i class="fas fa-plus me-2"></i>Créer une équipe
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

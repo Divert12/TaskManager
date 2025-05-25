@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block title %}Bienvenue sur le Gestionnaire de Tâches{% endblock %} {% block content %}
+<div class="container text-center mt-5">
+    <h1 class="display-4 mb-4">Bienvenue sur TaskManager</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title">Commencez à gérer vos tâches</h2>
+                    <p class="card-text text-muted">
+                        Connectez-vous ou créez un compte pour accéder à votre tableau de bord personnalisé.
+                    </p>
+                    <div class="d-grid gap-2 mt-4">
+                        <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Se connecter</a>
+                        <a href="{% url 'tasks:signup' %}" class="btn btn-outline-success btn-lg">S'inscrire</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

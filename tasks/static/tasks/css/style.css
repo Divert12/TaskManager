@@ -1,0 +1,628 @@
+:root {
+    --primary-color: #4c63d2;
+    --primary-dark: #3f51b5;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --warning-color: #fd7e14;
+    --danger-color: #dc3545;
+    --info-color: #17a2b8;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --sidebar-bg: #2c3e50;
+    --sidebar-hover: #34495e;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f5f7fa;
+    color: #2d3748;
+    line-height: 1.6;
+}
+
+
+/* Sidebar */
+
+.sidebar {
+    background: linear-gradient(135deg, var(--sidebar-bg) 0%, var(--primary-dark) 100%);
+    min-height: 100vh;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.sidebar .brand {
+    padding: 2rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .brand h4 {
+    color: white;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.sidebar .brand p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    margin: 0.5rem 0 0 0;
+}
+
+.sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    padding: 1rem 1.5rem;
+    margin: 0.25rem 1rem;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    transform: translateX(4px);
+}
+
+.sidebar .nav-link.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.sidebar .nav-link i {
+    font-size: 1.1rem;
+    width: 20px;
+}
+
+
+/* Main  */
+
+.main-content {
+    margin-left: 280px;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+
+/* header  */
+
+.page-header {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--card-shadow);
+    border-left: 4px solid var(--primary-color);
+}
+
+.page-header h1 {
+    color: var(--dark-color);
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.page-header .subtitle {
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+}
+
+
+/* cards */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.stat-card-icon.primary {
+    background: linear-gradient(135deg, var(--primary-color), #667eea);
+}
+
+.stat-card-icon.success {
+    background: linear-gradient(135deg, var(--success-color), #20c997);
+}
+
+.stat-card-icon.warning {
+    background: linear-gradient(135deg, var(--warning-color), #ffc107);
+}
+
+.stat-card-icon.info {
+    background: linear-gradient(135deg, var(--info-color), #6f42c1);
+}
+
+.stat-card-title {
+    color: var(--secondary-color);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card-value {
+    color: var(--dark-color);
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+
+/* cards */
+
+.modern-card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.modern-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.modern-card-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #e9ecef;
+    background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+}
+
+.modern-card-body {
+    padding: 2rem;
+}
+
+.modern-card-title {
+    color: var(--dark-color);
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+
+/* boutons  */
+
+.btn-modern {
+    border-radius: 50px;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    transition: all 0.3s ease;
+    border: none;
+    text-transform: none;
+    letter-spacing: 0.025em;
+}
+
+.btn-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary-modern {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #667eea 100%);
+    color: white;
+}
+
+.btn-success-modern {
+    background: linear-gradient(135deg, var(--success-color) 0%, #20c997 100%);
+    color: white;
+}
+
+.btn-warning-modern {
+    background: linear-gradient(135deg, #ffe082 0%, #ffd54f 100%) !important;
+    color: #6c3a00 !important;
+}
+
+.btn-danger-modern {
+    background: linear-gradient(135deg, #ff8a80 0%, #f77a7a 100%) !important;
+    color: #7a2323 !important;
+}
+
+
+/* Task cards */
+
+.task-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 4px solid transparent;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.task-card.todo {
+    border-left-color: var(--warning-color);
+}
+
+.task-card.in-progress {
+    border-left-color: var(--info-color);
+}
+
+.task-card.completed {
+    border-left-color: var(--success-color);
+}
+
+.task-card .task-title {
+    font-size: 1.1rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    overflow: hidden;
+}
+
+.task-card .card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    overflow: hidden;
+    min-height: 4.5em;
+}
+
+.task-card .btn-modern {
+    padding: 0.12rem 0.5rem !important;
+    font-size: 0.6rem;
+    border-radius: 2px !important;
+    min-width: unset;
+    line-height: 1.1;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.task-card .btn-modern i {
+    font-size: 0.55rem;
+    margin-right: 0.15rem;
+}
+
+.task-meta {
+    font-size: 0.875rem;
+    margin: 1rem 0;
+}
+
+.status-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    margin-right: 0.5rem;
+}
+
+.status-badge.todo {
+    background: rgba(253, 126, 20, 0.1);
+    color: var(--warning-color);
+}
+
+.status-badge.in-progress {
+    background: rgba(23, 162, 184, 0.1);
+    color: var(--info-color);
+}
+
+.status-badge.completed {
+    background: rgba(40, 167, 69, 0.1);
+    color: var(--success-color);
+}
+
+
+/* Forms  */
+
+.modern-form {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--card-shadow);
+}
+
+.form-group-modern {
+    margin-bottom: 1.5rem;
+}
+
+.form-label-modern {
+    color: var(--dark-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-control-modern {
+    border: 2px solid #e9ecef;
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.form-control-modern:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(76, 99, 210, 0.1);
+    outline: none;
+}
+
+
+/* Teams  */
+
+.team-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.team-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), #667eea);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.team-name {
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 0.25rem;
+}
+
+.team-members {
+    color: var(--secondary-color);
+    font-size: 0.875rem;
+}
+
+
+/* Responsive design */
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    .task-card {
+        margin-bottom: 1rem;
+    }
+    .task-card .btn-modern {
+        padding: 0.08rem 0.3rem;
+        font-size: 0.55rem;
+        height: 24px;
+    }
+    .task-card .btn-modern i {
+        font-size: 0.5rem;
+        margin-right: 0.1rem;
+    }
+}
+
+
+/* Animations */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+
+/* animations supp */
+
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hover-effect {
+    transition: all 0.3s ease;
+}
+
+.hover-effect:hover {
+    transform: translateX(5px);
+    color: var(--primary-color);
+}
+
+.fade-text {
+    transition: opacity 0.3s ease;
+}
+
+.fade-text:hover {
+    opacity: 0.8;
+}
+
+
+/* Animation pour les sous-taches */
+
+.subtask-section {
+    max-height: 150px;
+    overflow-y: auto;
+    margin-top: 1rem;
+    padding-right: 0.5rem;
+}
+
+.subtask-item {
+    font-size: 0.875rem;
+    padding: 0.5rem;
+    margin: 0.25rem 0;
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.subtask-item:hover {
+    background: rgba(0, 0, 0, 0.02);
+    border-left-color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+
+/* Animation pour les badges */
+
+.status-badge {
+    transition: all 0.3s ease;
+}
+
+.status-badge:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Animation pour les boutons modernes */
+
+.btn-modern {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-modern::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn-modern:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+
+/* Animation pour les cartes de taches */
+
+.task-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.task-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.task-card.important {
+    position: relative;
+    overflow: hidden;
+}

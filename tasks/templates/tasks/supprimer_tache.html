@@ -1,0 +1,22 @@
+<!-- tasks/templates/tasks/supprimer_tache.html -->
+{% extends "base.html" %} {% block title %}Supprimer la tâche{% endblock %} {% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-danger text-white text-center">
+                    <h3 class="fw-bold mb-0">Supprimer la tâche</h3>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <p class="mb-4">Êtes-vous sûr de vouloir supprimer la tâche <strong>{{ tache.titre }}</strong> ?</p>
+                    <form method="post" action="{% url 'tasks:supprimer_tache' tache.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger px-4">Supprimer</button>
+                        <a href="{% url 'tasks:liste_taches' %}" class="btn btn-outline-secondary ms-2">Annuler</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

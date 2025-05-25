@@ -1,0 +1,52 @@
+{% extends "base.html" %} {% block title %}Détails de la tâche{% endblock %} {% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-gradient text-center" style="background: linear-gradient(90deg, #0d6efd, #6610f2);">
+                    <h3 class="fw-bold mb-0">Détails de la tâche</h3>
+                </div>
+                <div class="card-body p-4">
+                    <h4 class="mb-3">{{ tache.titre }}</h4>
+                    <p class="mb-2"><strong>Description :</strong> {{ tache.description }}</p>
+                    <p class="mb-2"><strong>Statut :</strong> <span class="badge {% if tache.statut == 'ACCOMPLIE' %}bg-success{% else %}bg-warning{% endif %}">{{ tache.get_statut_display }}</span></p>
+                    <p class="mb-2"><strong>Visibilité :</strong> {% if tache.est_prive %}<span class="badge bg-secondary">Privée</span>{% else %}<span class="badge bg-info">Publique</span>{% endif %}</p>
+                    <p class="mb-2"><strong>Créée par :</strong> <a href="{% url 'tasks:profil_utilisateur' tache.creer_par.id %}">{{ tache.creer_par.username }}</a></p>
+                    <p class="mb-2"><strong>Assignée à :</strong>
+                        <ul>
+                            {% for utilisateur in tache.personne_assignee.all %}
+                            <li><a href="{% url 'tasks:profil_utilisateur' utilisateur.id %}">{{ utilisateur.username }}</a></li>
+                            {% empty %}
+                            <li>Personne</li>
+                            {% endfor %}
+                        </ul>
+                    </p>
+                    <p class="mb-2"><strong>Équipes assignées :</strong>
+                        <ul>
+                            {% for eq in tache.equipes_assignees.all %}
+                            <li>{{ eq.nom }}</li>
+                            {% empty %}
+                            <li>Aucune</li>
+                            {% endfor %}
+                        </ul>
+                    </p>
+                    <p class="mb-2"><strong>Sous-tâches :</strong>
+                        <ul>
+                            {% for s in tache.sous_tache.all %}
+                            <li>{{ s.titre }}</li>
+                            {% empty %}
+                            <li>Aucune</li>
+                            {% endfor %}
+                        </ul>
+                    </p>
+                    <div class="d-flex gap-2 mt-4">
+                        <a href="{% url 'tasks:modifier_tache' tache.id %}" class="btn btn-outline-warning">✏️ Modifier</a>
+                        <a href="{% url 'tasks:supprimer_tache' tache.id %}" class="btn btn-outline-danger">🗑️ Supprimer</a>
+                        <a href="{% url 'tasks:liste_taches' %}" class="btn btn-outline-secondary">← Retour</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

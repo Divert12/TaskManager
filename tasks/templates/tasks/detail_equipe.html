@@ -1,0 +1,47 @@
+{% extends "base.html" %} {% block title %}Détails de l'équipe{% endblock %} {% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-gradient text-center" style="background: linear-gradient(90deg, #0d6efd, #6610f2);">
+                    <h3 class="fw-bold mb-0">Équipe : {{ equipe.nom }}</h3>
+                </div>
+                <div class="card-body p-4">
+                    <h5 class="fw-semibold mb-3">Membres</h5>
+                    <ul class="list-group mb-4">
+                        {% for membre in membres %}
+                        <li class="list-group-item d-flex align-items-center">
+                            <span class="badge bg-primary me-2">{{ membre.username|first|upper }}</span>
+                            <a href="{% url 'tasks:profil_utilisateur' membre.id %}" class="text-decoration-none">{{ membre.username }}</a>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item text-muted">Aucun membre.</li>
+                        {% endfor %}
+                    </ul>
+                    <h5 class="fw-semibold mb-3">Tâches de l'équipe</h5>
+                    <ul class="list-group mb-4">
+                        {% for tache in taches %}
+                        <li class="list-group-item">{{ tache.titre }}</li>
+                        {% empty %}
+                        <li class="list-group-item text-muted">Aucune tâche liée à cette équipe.</li>
+                        {% endfor %}
+                    </ul>
+                    {% if peut_rejoindre %}
+                    <form method="post" class="mb-3">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success">Rejoindre l'équipe</button>
+                    </form>
+                    {% else %}
+                    <p class="text-success">Vous êtes déjà membre de cette équipe.</p>
+                    {% endif %}
+                    <form method="post" action="{% url 'tasks:quitter_equipe' equipe.id %}" class="mb-3">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger">Quitter l'équipe</button>
+                    </form>
+                    <a href="{% url 'tasks:liste_equipes' %}" class="btn btn-outline-secondary">← Retour</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

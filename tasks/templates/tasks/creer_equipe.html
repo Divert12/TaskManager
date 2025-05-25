@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block title %}Créer une équipe{% endblock %} {% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-gradient text-center" style="background: linear-gradient(90deg, #0d6efd, #6610f2);">
+                    <h3 class="fw-bold mb-0">Créer une équipe</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" novalidate>
+                        {% csrf_token %} {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label fw-semibold">{{ field.label }}</label> {{ field }} {% if field.name == 'membres' %}
+                            <small class="form-text text-muted">Maintenez Ctrl (ou Cmd sur Mac) pour sélectionner plusieurs membres</small> {% endif %} {% if field.errors %}
+                            <div class="invalid-feedback d-block">{{ field.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <button type="submit" class="btn btn-success px-4">Créer</button>
+                            <a href="{% url 'tasks:liste_taches' %}" class="btn btn-outline-secondary">Annuler</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

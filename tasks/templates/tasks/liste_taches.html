@@ -1,0 +1,125 @@
+{% extends "base.html" %} {% load widget_tweaks %} {% block title %}Liste des Tâches{% endblock %} {% block content %}
+<div class="container py-5 fade-in">
+    <!-- en-tete  -->
+    <div class="page-header animate-on-scroll">
+        <h1>Liste des Tâches</h1>
+        <p class="subtitle">Gérez vos tâches et suivez leur progression</p>
+    </div>
+
+
+    <div class="row g-4 task-list">
+        {% for t in taches %}
+        <div class="col-md-4">
+            <div class="task-card {% if t.statut == 'ACCOMPLIE' %}completed{% elif t.statut == 'A Faire' %}todo{% endif %} {% if t.est_prive %}important{% endif %} animate-on-scroll h-100">
+                <div class="d-flex flex-column h-100">
+                    <!-- titre -->
+                    <h5 class="task-title">
+                        <a href="{% url 'tasks:detail_tache' t.id %}" class="text-decoration-none hover-effect">
+                            {{ t.titre }}
+                        </a>
+                    </h5>
+
+
+                    <div class="mb-3">
+                        <span class="status-badge {% if t.statut == 'ACCOMPLIE' %}completed{% else %}todo{% endif %}">
+                            {{ t.get_statut_display }}
+                        </span> {% if t.est_prive %}
+                        <span class="badge bg-secondary ">
+                            <i class="fas fa-lock me-1"></i>Privée
+                        </span> {% endif %}
+                    </div>
+
+                    <!-- Description avec animation de fade -->
+                    <p class="card-text text-muted small mb-3 fade-text flex-grow-1">
+                        {{ t.description|truncatechars:100 }}
+                    </p>
+
+
+                    <div class="task-meta mb-3">
+                        <div class="d-flex align-items-center text-muted small mb-2 hover-effect">
+                            <i class="fas fa-user me-2"></i>
+                            <span>Créée par {{ t.creer_par.username }}</span>
+                        </div>
+                        {% if t.personne_assignee.exists %}
+                        <div class="d-flex align-items-center text-muted small mb-2 hover-effect">
+                            <i class="fas fa-users me-2"></i>
+                            <span>{{ t.personne_assignee.count }} personne(s)</span>
+                        </div>
+                        {% endif %} {% if t.equipes_assignees.exists %}
+                        <div class="d-flex align-items-center text-muted small hover-effect">
+                            <i class="fas fa-user-friends me-2"></i>
+                            <span>{{ t.equipes_assignees.count }} équipe(s)</span>
+                        </div>
+                        {% endif %}
+                    </div>
+
+
+                    {% if t.sous_tache.all %}
+                    <div class="subtask-section mt-3">
+                        <h6 class="text-muted mb-2">Sous-tâches :</h6>
+                        {% for subtask in t.sous_tache.all %}
+                        <div class="subtask-item">
+                            <i class="fas fa-arrow-right me-2"></i> {{ subtask.titre }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Boutons -->
+                    <div class="d-flex gap-2 mt-auto pt-3">
+                        <a href="{% url 'tasks:modifier_tache' t.id %}" class="btn btn-sm btn-modern btn-warning-modern flex-grow-1">
+                            <i class="fas fa-edit me-1"></i>Modifier
+                        </a>
+                        <a href="{% url 'tasks:supprimer_tache' t.id %}" class="btn btn-sm btn-modern btn-danger-modern flex-grow-1">
+                            <i class="fas fa-trash me-1"></i>Supprimer
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+
+        <div class="col-12">
+            <div class="alert alert-info animate-on-scroll">
+                <i class="fas fa-info-circle me-2"></i> Aucune tâche trouvée.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Bouton d'ajout -->
+    <div class="text-end mt-4 animate-on-scroll">
+        <a href="{% url 'tasks:ajouter_tache' %}" class="btn btn-modern btn-primary-modern">
+            <i class="fas fa-plus me-2"></i>Nouvelle Tâche
+        </a>
+    </div>
+</div>
+
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        });
+
+
+        document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el));
+
+
+        document.querySelectorAll('.task-card.important').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    });
+</script>
+{% endblock %} {% endblock %}

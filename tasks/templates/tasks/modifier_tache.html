@@ -1,0 +1,96 @@
+<!-- tasks/templates/tasks/modifier_tache.html -->
+{% extends "base.html" %} {% load widget_tweaks %} {% block title %}Modifier la tâche{% endblock %} {% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-gradient text-center" style="background: linear-gradient(90deg, #0d6efd, #6610f2);">
+                    <h3 class="fw-bold mb-0"> Modifier la tâche</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" novalidate class="needs-validation">
+                        {% csrf_token %}
+                        <!-- ttitre -->
+                        <div class="mb-3">
+                            <label for="{{ form.titre.id_for_label }}" class="form-label fw-semibold">{{ form.titre.label }}
+
+                            </label> {% render_field form.titre class="form-control shadow-sm" placeholder="Entrez le titre de la tâche" %} {% if form.titre.errors%}
+                            <div class="invalid-feedback d-block">{{ form.titre.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                        <!-- description -->
+                        <div class="mb-3">
+                            <label for="{{ form.description.id_for_label }}" class="form-label fw-semibold">{{ form.description.label }}
+
+                            </label> {% render_field form.description class="form-control shadow-sm" rows="4" placeholder="Décrivez la tâche en détail..." %} {% if form.description.errors %}
+                            <div class="invalid-feedback d-block">{{ form.description.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                        <!-- statut -->
+                        <div class="mb-3">
+                            <label for="{{ form.statut.id_for_label }}" class="form-label fw-semibold">{{ form.statut.label }}</label> {% render_field form.statut class="form-select shadow-sm" %} {% if form.statut.errors %}
+                            <div class="invalid-feedback d-block">{{ form.statut.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                        <!-- personnes assignes -->
+                        <div class="mb-3">
+                            <label for="{{ form.personne_assignee.id_for_label }}" class="form-label fw-semibold">{{ form.personne_assignee.label }}
+
+                            </label> {% render_field form.personne_assignee class="form-select shadow-sm" multiple="multiple" data-placeholder="Sélectionnez les personnes à assigner" %}
+                            <small class="form-text text-muted">Maintenez Ctrl (ou Cmd sur Mac) pour sélectionner plusieurs personnes</small> {% if form.personne_assignee.errors %}
+                            <div class="invalid-feedback d-block">{{ form.personne_assignee.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                        <!-- equipes assignes -->
+                        <div class="mb-3">
+                            <label for="{{ form.equipes_assignees.id_for_label }}" class="form-label fw-semibold">{{ form.equipes_assignees.label }}
+
+                            </label> {% render_field form.equipes_assignees class="form-select shadow-sm" multiple="multiple" data-placeholder="Sélectionnez les équipes à assigner" %}
+                            <small class="form-text text-muted">Maintenez Ctrl (ou Cmd sur Mac) pour sélectionner plusieurs équipes</small> {% if form.equipes_assignees.errors %}
+                            <div class="invalid-feedback d-block">{{ form.equipes_assignees.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                        <!-- Soustache -->
+                        <div class="mb-3">
+                            <label for="{{ form.sous_tache.id_for_label }}" class="form-label fw-semibold">{{ form.sous_tache.label }}
+
+                            </label> {% render_field form.sous_tache class="form-select shadow-sm" multiple="multiple" data-placeholder="Sélectionnez les sous-tâches" %}
+                            <small class="form-text text-muted">Maintenez Ctrl (ou Cmd sur Mac) pour sélectionner plusieurs sous-tâches</small> {% if form.sous_tache.errors %}
+                            <div class="invalid-feedback d-block">{{ form.sous_tache.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                        <!-- tachee prv -->
+                        <div class="mb-3">
+                            <div class="form-check">
+                                {% render_field form.est_prive class="form-check-input" %}
+                                <label class="form-check-label fw-semibold" for="{{ form.est_prive.id_for_label }}">
+                                    {{ form.est_prive.label }}
+                                </label>
+                                <small class="form-text text-muted d-block">Une tâche privée ne sera visible que par vous et les personnes/équipes assignées</small>
+                            </div>
+                            {% if form.est_prive.errors %}
+                            <div class="invalid-feedback d-block">{{ form.est_prive.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <a href="{% url 'tasks:liste_taches' %}" class="btn btn-outline-secondary">Retour </a>
+                            <button type="submit" class="btn btn-success px-4"> Modifier</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const multiSelects = document.querySelectorAll('select[multiple]');
+        multiSelects.forEach(select => {
+            select.classList.add('form-select');
+            select.style.height = '120px';
+        });
+    });
+</script>
+{% endblock %} {% endblock %}
