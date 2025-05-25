@@ -25,7 +25,6 @@ git clone <https://github.com/Divert12/TaskManager.git>
 cd projet-g-tache
 python -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
 python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
@@ -50,11 +49,6 @@ python manage.py runserver
 - Les styles sont dans `tasks/static/tasks/css/style.css`
 - Les templates principaux sont dans `tasks/templates/tasks/`
 
-## Tests
-
-```bash
-python manage.py test
-```
 
 ## Contribution
 
