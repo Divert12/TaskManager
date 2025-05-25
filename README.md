@@ -17,7 +17,6 @@ TasManager est une application web collaborative de gestion de tâches permettan
 ### Prérequis
 - Python 3.8+
 - Django 4.x
-- (Autres dépendances à préciser dans `requirements.txt`)
 
 ### Étapes
 
