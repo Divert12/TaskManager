@@ -12,11 +12,25 @@ TasManager est une application web collaborative de gestion de tâches permettan
 - Animations et interactions modernes
 - Interface responsive
 
+## Principales URLs de l’application
+→ / : Page d’accueil
+→ /login/ : Connexion
+→ /signup/ : Inscription
+→ /tasks/liste_taches/ : Liste des tâches
+→ /tasks/ajouter_tache/ : Ajouter une tâche
+→ /tasks/modifier_tache/<id>/ : Modifier une tâche
+→ /tasks/supprimer_tache/<id>/ : Supprimer une tâche
+→ /tasks/liste_equipes/ : Liste des équipes
+→ /tasks/creer_equipe/ : Créer une équipe
+→ /tasks/equipe_detail/<id>/ : Détail d’une équipe
+→ /tasks/profil/ : Dashboard
+1
+
+
 ## Installation
 
 ### Prérequis
 - Python 3.8+
-- Django 4.x
 
 ### Étapes
 
@@ -25,9 +39,8 @@ git clone <https://github.com/Divert12/TaskManager.git>
 cd TaskManager
 python -m venv venv
 source venv/bin/activate
+pip install django
 pip install django-widget-tweaks
-python manage.py migrate
-python manage.py createsuperuser
 python manage.py runserver
 ```
 
