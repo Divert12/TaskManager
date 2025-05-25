@@ -7,6 +7,20 @@ class TacheForm(forms.ModelForm):
     class Meta:
         model = tache
         fields = ['titre', 'description', 'statut','personne_assignee', 'equipes_assignees', 'sous_tache', 'est_prive']
+    def init(self, args, **kwargs):
+        super().init(args, **kwargs)
+        if self.instance and self.instance.pk:
+            exclude_ids = {self.instance.pk}
+            def get_ancestors(task):
+                parents = tache.objects.filter(sous_tache=task)
+                for parent in parents:
+                    if parent.pk not in exclude_ids:
+                        exclude_ids.add(parent.pk)
+                        get_ancestors(parent)
+            get_ancestors(self.instance)
+            self.fields['sous_tache'].queryset = tache.objects.exclude(pk__in=exclude_ids)
+        else:
+            self.fields['sous_tache'].queryset = tache.objects.all()
 
 # formulaire dinscription avec validation demail unique
 class InscriptionForm(UserCreationForm):
