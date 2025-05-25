@@ -22,9 +22,10 @@ TasManager est une application web collaborative de gestion de tâches permettan
 
 ```bash
 git clone <https://github.com/Divert12/TaskManager.git>
-cd projet-g-tache
+cd TaskManager
 python -m venv venv
 source venv/bin/activate
+pip install django-widget-tweaks
 python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
